@@ -52,7 +52,7 @@ The Homebrew formula installs a small wrapper that execs the bundled
 ## Method 3 — npm (works on Windows)
 
 ```bash
-npm install -g @liush2yuxjtu/claude-statusline
+npm install -g @liushiyumathxjtu/claude-statusline
 ```
 
 The npm package ships a tiny Node wrapper (`bin/statusline.js`) that
@@ -120,7 +120,7 @@ curl -sSfL https://raw.githubusercontent.com/liush2yuxjtu/claude-statusline/main
 brew uninstall liush2yuxjtu/tap/claude-statusline
 
 # If installed via npm:
-npm uninstall -g @liush2yuxjtu/claude-statusline
+npm uninstall -g @liushiyumathxjtu/claude-statusline
 
 # If installed via VS Code extension:
 code --uninstall-extension liush2yuxjtu.claude-statusline

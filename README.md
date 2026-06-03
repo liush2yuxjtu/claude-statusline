@@ -44,7 +44,7 @@ patches `~/.claude/settings.json` so Claude Code calls it as
 brew install liush2yuxjtu/tap/claude-statusline
 
 # npm (works on Windows too — see bin/statusline.js wrapper)
-npm install -g @liush2yuxjtu/claude-statusline
+npm install -g @liushiyumathxjtu/claude-statusline
 
 # VS Code extension
 code --install-extension liush2yuxjtu.claude-statusline

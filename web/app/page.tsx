@@ -56,7 +56,7 @@ cd claude-statusline
   {
     id: "npm",
     label: "npm",
-    body: `npm install -g @liush2yuxjtu/claude-statusline`,
+    body: `npm install -g @liushiyumathxjtu/claude-statusline`,
   },
   {
     id: "vsce",
@@ -182,7 +182,7 @@ layout = ["dir", "branch", "effort", "ctx", "five_hour"]
           VS Code Marketplace
         </a>
         <a href="https://open-vsx.org/extension/liush2yuxjtu/claude-statusline">OpenVSX</a>
-        <a href="https://www.npmjs.com/package/@liush2yuxjtu/claude-statusline">npm</a>
+        <a href="https://www.npmjs.com/package/@liushiyumathxjtu/claude-statusline">npm</a>
         <a href="https://github.com/liush2yuxjtu/homebrew-tap">Homebrew tap</a>
         <span className="muted" style={{ marginLeft: 16 }}>MIT · {new Date().getFullYear()}</span>
       </footer>

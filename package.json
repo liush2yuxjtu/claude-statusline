@@ -1,5 +1,5 @@
 {
-  "name": "@liush2yuxjtu/claude-statusline",
+  "name": "@liushiyumathxjtu/claude-statusline",
   "version": "0.1.0",
   "description": "A configurable, themeable, provider-pluggable statusline for Claude Code TUI.",
   "license": "MIT",
