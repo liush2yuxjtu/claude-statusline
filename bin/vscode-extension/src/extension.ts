@@ -26,9 +26,9 @@ function defaultScriptPath(): string {
   const home = homedir();
   if (process.platform === "win32") {
     // On Windows, the npm wrapper is preferred
-    return resolve(home, "AppData", "Roaming", "npm", "claude-statusline.cmd");
+    return resolve(home, "AppData", "Roaming", "npm", "minimax-statusline.cmd");
   }
-  return resolve(home, ".local", "bin", "claude-statusline");
+  return resolve(home, ".local", "bin", "minimax-statusline");
 }
 
 function resolveScriptPath(): string {
@@ -90,12 +90,12 @@ async function renderOnce(): Promise<void> {
   if (!statusItem) return;
   const script = resolveScriptPath();
   if (!existsSync(script)) {
-    statusItem.text = `$(warning) claude-statusline: script not found at ${script}`;
+    statusItem.text = `$(warning) minimax-statusline: script not found at ${script}`;
     statusItem.tooltip = new vscode.MarkdownString(
       "Install the script first:\n\n" +
         "```\n" +
-        "git clone https://github.com/liush2yuxjtu/claude-statusline\n" +
-        "cd claude-statusline && ./install.sh\n" +
+        "git clone https://github.com/liush2yuxjtu/minimax-statusline\n" +
+        "cd minimax-statusline && ./install.sh\n" +
         "```\n\n" +
         `Or set claudeStatusline.scriptPath to the correct path.`
     );
@@ -111,17 +111,17 @@ async function renderOnce(): Promise<void> {
     });
     // Strip trailing newlines and any remaining ANSI sequences (belt-and-suspenders).
     const text = stdout.replace(/\r?\n+$/, "").replace(/\x1b\[[0-9;]*m/g, "");
-    statusItem.text = text || "$(circle-slash) claude-statusline";
+    statusItem.text = text || "$(circle-slash) minimax-statusline";
     statusItem.tooltip = new vscode.MarkdownString(
       `Path: \`${script}\`\n\n` +
         "Click to run a one-shot render in the Output panel."
     );
     statusItem.command = {
-      title: "Run claude-statusline",
+      title: "Run minimax-statusline",
       command: "claudeStatusline.runOnce",
     };
   } catch (e: any) {
-    statusItem.text = `$(error) claude-statusline: ${(e?.message || "error").slice(0, 60)}`;
+    statusItem.text = `$(error) minimax-statusline: ${(e?.message || "error").slice(0, 60)}`;
     statusItem.tooltip = new vscode.MarkdownString(
       `Path: \`${script}\`\n\nError:\n\`\`\`\n${e?.message || e}\n\`\`\``
     );
@@ -181,13 +181,13 @@ export function activate(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
     vscode.commands.registerCommand("claudeStatusline.runOnce", async () => {
       await renderOnce();
-      const out = vscode.window.createOutputChannel("claude-statusline");
+      const out = vscode.window.createOutputChannel("minimax-statusline");
       out.appendLine(statusItem?.text ?? "(no text)");
       out.show();
     }),
     vscode.commands.registerCommand("claudeStatusline.openRepo", () => {
       void vscode.env.openExternal(
-        vscode.Uri.parse("https://github.com/liush2yuxjtu/claude-statusline")
+        vscode.Uri.parse("https://github.com/liush2yuxjtu/minimax-statusline")
       );
     })
   );

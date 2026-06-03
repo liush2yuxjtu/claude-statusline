@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# uninstall.sh — remove claude-statusline and revert the settings.json patch.
+# uninstall.sh — remove minimax-statusline and revert the settings.json patch.
 
 set -e
 
 PREFIX="${PREFIX:-$HOME/.local}"
 BIN_DIR="$PREFIX/bin"
-BIN_PATH="$BIN_DIR/claude-statusline"
+BIN_PATH="$BIN_DIR/minimax-statusline"
 SETTINGS_JSON="${CLAUDE_SETTINGS_JSON:-$HOME/.claude/settings.json}"
 
 say()  { printf '→ %s\n' "$*"; }
@@ -46,7 +46,7 @@ fi
 
 cat <<EOF
 
-✅ claude-statusline uninstalled.
+✅ minimax-statusline uninstalled.
 
 To remove the config file too: rm -rf "${XDG_CONFIG_HOME:-$HOME/.config}/statusline"
 To remove the cache:           rm -rf "${XDG_CACHE_HOME:-$HOME/.cache}/statusline"

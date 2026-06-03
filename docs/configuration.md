@@ -1,6 +1,6 @@
 # Configuration
 
-claude-statusline reads a single TOML file. Every key is optional — omit it
+minimax-statusline reads a single TOML file. Every key is optional — omit it
 to use the default.
 
 ## Where the file is
@@ -18,14 +18,14 @@ it, you just can't customize without creating a file.
 ## Authoring one
 
 ```bash
-claude-statusline --init-config   # writes ~/.config/statusline/config.toml
+minimax-statusline --init-config   # writes ~/.config/statusline/config.toml
 $EDITOR ~/.config/statusline/config.toml
-claude-statusline --dump-config   # see what got resolved
+minimax-statusline --dump-config   # see what got resolved
 ```
 
 The shipped example (`config.example.toml` in the repo) is the canonical
 reference — every key, with its default, is documented inline. Run
-`claude-statusline --dump-config` to see the actual resolved values at
+`minimax-statusline --dump-config` to see the actual resolved values at
 runtime.
 
 ## Schema (cheat sheet)
@@ -86,7 +86,7 @@ low_icon_pct     = 10   # icon swaps to "low" below this
 
 ## Reloading
 
-The config is read on every turn (the script is invoked by Claude Code for
+The config is read on every turn (the script is invoked by MiniMax for
 each turn). So edits take effect immediately — no daemon, no signal, no
 restart.
 
@@ -96,7 +96,7 @@ If you've been using the original personal script (no config file), just
 run:
 
 ```bash
-claude-statusline --init-config
+minimax-statusline --init-config
 ```
 
 …and you get the bundled default. Then tweak.

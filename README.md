@@ -1,16 +1,16 @@
-# claude-statusline
+# minimax-statusline
 
 > 🌐 **Landing page**: <https://web-zeta-sage-59.vercel.app>
 
 A configurable, themeable, provider-pluggable statusline for the
-[Claude Code](https://docs.claude.com/en/docs/claude-code) TUI.
+[MiniMax](https://docs.claude.com/en/docs/minimax) TUI.
 
 ```
 win-ontology │ 🌿 main │ effort=high │ ctx: 95% (950k) │ 5h: ⚡ ██████████ 98% | @06-03 20:00
 ```
 
 Forked from the personal script that powered the author's TUI for months,
-then generalized so any Claude Code user can adopt it without forking.
+then generalized so any MiniMax user can adopt it without forking.
 
 - **Configurable**: themes, colors, layout order, provider — all in `~/.config/statusline/config.toml`
 - **Themeable**: bundled `default`, `minimal`, `vivid`, `solarized`; bring your own
@@ -24,47 +24,47 @@ then generalized so any Claude Code user can adopt it without forking.
 
 ```bash
 # 1. Clone
-git clone https://github.com/liush2yuxjtu/claude-statusline.git
-cd claude-statusline
+git clone https://github.com/liush2yuxjtu/minimax-statusline.git
+cd minimax-statusline
 
 # 2. Install
 ./install.sh
 
-# 3. Restart Claude Code — done.
+# 3. Restart MiniMax — done.
 ```
 
-`install.sh` copies the script to `~/.local/bin/claude-statusline` and
-patches `~/.claude/settings.json` so Claude Code calls it as
+`install.sh` copies the script to `~/.local/bin/minimax-statusline` and
+patches `~/.claude/settings.json` so MiniMax calls it as
 `statusLine.command`.
 
 ## Other install methods
 
 ```bash
 # Homebrew (macOS / Linuxbrew)
-brew install liush2yuxjtu/tap/claude-statusline
+brew install liush2yuxjtu/tap/minimax-statusline
 
 # npm (works on Windows too — see bin/statusline.js wrapper)
-npm install -g @liushiyumathxjtu/claude-statusline
+npm install -g @liushiyumathxjtu/minimax-statusline
 
 # VS Code extension
-code --install-extension liush2yuxjtu.claude-statusline
+code --install-extension liush2yuxjtu.minimax-statusline
 ```
 
 ## Quick config
 
 ```bash
 # Write a starter config and edit it
-claude-statusline --init-config
+minimax-statusline --init-config
 $EDITOR ~/.config/statusline/config.toml
 
 # Preview the resolved config
-claude-statusline --dump-config
+minimax-statusline --dump-config
 
 # Sanity-check deps + network
-claude-statusline --doctor
+minimax-statusline --doctor
 
 # Try a different theme without changing your config
-STATUSLINE_THEME=vivid claude-statusline < some-claude-stdin.json
+STATUSLINE_THEME=vivid minimax-statusline < some-claude-stdin.json
 ```
 
 ## What it shows
@@ -119,7 +119,7 @@ layout = ["dir", "branch", "effort", "ctx", "five_hour"]  # default
 
 | Flag | Purpose |
 |---|---|
-| `--version` | print `claude-statusline 0.1.0` and exit |
+| `--version` | print `minimax-statusline 0.1.0` and exit |
 | `--help` | print usage and exit |
 | `--doctor` | check `python3` / `git` / `jq` / config / theme / token |
 | `--dump-config` | print resolved config (config + theme + provider + layout) |
@@ -146,9 +146,9 @@ layout = ["dir", "branch", "effort", "ctx", "five_hour"]  # default
 
 ## 中文说明
 
-这个项目是 [Claude Code](https://docs.claude.com/en/docs/claude-code) TUI
+这个项目是 [MiniMax](https://docs.claude.com/en/docs/minimax) TUI
 底部状态栏的可配置、可主题化、提供者可插拔的版本。fork 自作者自己
-用了几个月的个人脚本，现在通用化了让任何 Claude Code 用户都能用、
+用了几个月的个人脚本，现在通用化了让任何 MiniMax 用户都能用、
 不用 fork。
 
 - **可配置**: 主题、颜色、布局顺序、提供方 — 全在 `~/.config/statusline/config.toml`
@@ -162,7 +162,7 @@ layout = ["dir", "branch", "effort", "ctx", "five_hour"]  # default
 ## Project structure
 
 ```
-claude-statusline/
+minimax-statusline/
 ├── statusline.sh              the script
 ├── lib/
 │   ├── parse_input.py         stdin JSON → normalized fields

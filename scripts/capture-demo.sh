@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# scripts/capture-demo.sh — record a short asciinema demo of claude-statusline
+# scripts/capture-demo.sh — record a short asciinema demo of minimax-statusline
 # rendering on a fixture, then convert to a GIF for the landing page.
 #
 # Prerequisites:
@@ -7,8 +7,8 @@
 #   brew install agg         (the asciinema GIF generator)
 #
 # Outputs:
-#   assets/claude-statusline-demo.cast
-#   assets/claude-statusline-demo.gif
+#   assets/minimax-statusline-demo.cast
+#   assets/minimax-statusline-demo.gif
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -20,13 +20,13 @@ if [ ! -f "$FIXTURE" ]; then
   exit 1
 fi
 
-CAST="assets/claude-statusline-demo.cast"
-GIF="assets/claude-statusline-demo.gif"
+CAST="assets/minimax-statusline-demo.cast"
+GIF="assets/minimax-statusline-demo.gif"
 
 echo "→ recording asciinema → $CAST"
 asciinema rec \
   --cols 110 --rows 6 \
-  --title "claude-statusline demo" \
+  --title "minimax-statusline demo" \
   --command "bash -c '
     echo \"# default theme\";
     cat $FIXTURE | STATUSLINE_THEME=default bash statusline.sh;

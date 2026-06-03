@@ -55,7 +55,7 @@ class TestParseStdin(unittest.TestCase):
         self.assertEqual(d["effort"], "default")
 
     def test_alternate_key_names(self) -> None:
-        # Some Claude Code versions use top-level cwd / model_id.
+        # Some MiniMax versions use top-level cwd / model_id.
         text = json.dumps({"cwd": "/x", "model_id": "claude-x", "effort_level": "low"})
         d = parse_input.parse_stdin(text)
         self.assertEqual(d["cwd"], "/x")

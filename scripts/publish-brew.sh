@@ -2,7 +2,7 @@
 # scripts/publish-brew.sh — push the Homebrew formula to the tap repo.
 #
 # Prerequisites:
-#   A GitHub release of claude-statusline must exist (./scripts/release.sh).
+#   A GitHub release of minimax-statusline must exist (./scripts/release.sh).
 #   The tap repo liush2yuxjtu/homebrew-tap must exist (created the first time
 #   this script runs; idempotent after).
 #
@@ -13,7 +13,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 VERSION="${1:-$(node -p "require('./package.json').version")}"
-TAR_URL="https://github.com/liush2yuxjtu/claude-statusline/archive/v${VERSION}.tar.gz"
+TAR_URL="https://github.com/liush2yuxjtu/minimax-statusline/archive/v${VERSION}.tar.gz"
 
 TAP_REPO="liush2yuxjtu/homebrew-tap"
 TAP_DIR="${TAP_DIR:-$HOME/work/homebrew-tap}"
@@ -41,10 +41,10 @@ fi
 cd "$TAP_DIR"
 mkdir -p Formula
 
-cat > Formula/claude-statusline.rb <<EOF
+cat > Formula/minimax-statusline.rb <<EOF
 class ClaudeStatusline < Formula
-  desc "Configurable, themeable statusline for Claude Code TUI"
-  homepage "https://github.com/liush2yuxjtu/claude-statusline"
+  desc "Configurable, themeable statusline for MiniMax CLI"
+  homepage "https://github.com/liush2yuxjtu/minimax-statusline"
   url "$TAR_URL"
   sha256 "$SHA"
   license "MIT"
@@ -57,23 +57,23 @@ class ClaudeStatusline < Formula
     libexec.install "lib"
     libexec.install "themes"
     libexec.install "config.example.toml"
-    (bin/"claude-statusline").write <<~SH
+    (bin/"minimax-statusline").write <<~SH
       #!/usr/bin/env bash
       exec "#{libexec}/statusline.sh" "\$@"
     SH
-    chmod 0755, bin/"claude-statusline"
+    chmod 0755, bin/"minimax-statusline"
   end
 
   test do
-    assert_match "claude-statusline #{version}", shell_output("#{bin}/claude-statusline --version")
+    assert_match "minimax-statusline #{version}", shell_output("#{bin}/minimax-statusline --version")
   end
 end
 EOF
 
-git add Formula/claude-statusline.rb
+git add Formula/minimax-statusline.rb
 git -c user.email="104006363+liush2yuxjtu@users.noreply.github.com" \
     -c user.name="Liu Shiyu" \
-    commit -m "claude-statusline ${VERSION}"
+    commit -m "minimax-statusline ${VERSION}"
 git push origin main
 
-echo "✓ done. Install with: brew install $TAP_REPO/claude-statusline"
+echo "✓ done. Install with: brew install $TAP_REPO/minimax-statusline"

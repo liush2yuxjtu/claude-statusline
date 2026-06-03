@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "claude-statusline — the Claude Code statusline, configurable",
+  title: "minimax-statusline — the MiniMax statusline, configurable",
   description:
-    "A configurable, themeable, provider-pluggable statusline for the Claude Code TUI. Open source (MIT), zero dependencies, install in 30 seconds.",
-  metadataBase: new URL("https://claude-statusline.vercel.app"),
+    "A configurable, themeable, provider-pluggable statusline for the MiniMax CLI. Open source (MIT), zero dependencies, install in 30 seconds.",
+  metadataBase: new URL("https://minimax-statusline.vercel.app"),
   openGraph: {
-    title: "claude-statusline",
+    title: "minimax-statusline",
     description:
-      "A configurable, themeable, provider-pluggable statusline for Claude Code.",
+      "A configurable, themeable, provider-pluggable statusline for MiniMax.",
     type: "website",
   },
 };

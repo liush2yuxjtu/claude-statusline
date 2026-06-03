@@ -1,7 +1,7 @@
 {
-  "name": "claude-statusline",
+  "name": "minimax-statusline",
   "displayName": "Claude Statusline",
-  "description": "Mirror the claude-statusline TUI in the VS Code status bar. Configurable themes, provider-pluggable.",
+  "description": "Mirror the minimax-statusline TUI in the VS Code status bar. Configurable themes, provider-pluggable.",
   "version": "0.1.0",
   "publisher": "liush2yuxjtu",
   "license": "MIT",
@@ -12,19 +12,19 @@
     "Other"
   ],
   "keywords": [
-    "claude",
-    "claude-code",
+    "minimax",
+    "minimax",
     "statusline",
     "tui",
     "minimax"
   ],
-  "homepage": "https://github.com/liush2yuxjtu/claude-statusline",
+  "homepage": "https://github.com/liush2yuxjtu/minimax-statusline",
   "repository": {
     "type": "git",
-    "url": "https://github.com/liush2yuxjtu/claude-statusline.git"
+    "url": "https://github.com/liush2yuxjtu/minimax-statusline.git"
   },
   "bugs": {
-    "url": "https://github.com/liush2yuxjtu/claude-statusline/issues"
+    "url": "https://github.com/liush2yuxjtu/minimax-statusline/issues"
   },
   "main": "./out/extension.js",
   "activationEvents": [
@@ -36,7 +36,7 @@
       "properties": {
         "claudeStatusline.scriptPath": {
           "type": "string",
-          "default": "${userHome}/.local/bin/claude-statusline",
+          "default": "${userHome}/.local/bin/minimax-statusline",
           "description": "Absolute path to the statusline.sh script. The extension execFile's it and renders the output."
         },
         "claudeStatusline.refreshIntervalMs": {

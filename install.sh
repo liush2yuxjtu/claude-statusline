@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# install.sh — install claude-statusline for the current user.
+# install.sh — install minimax-statusline for the current user.
 #
 # Behavior:
-#   - Copies the repo's statusline.sh to $PREFIX/bin/claude-statusline
-#   - Patches ~/.claude/settings.json so Claude Code calls it as statusLine
+#   - Copies the repo's minimax-statusline.sh to $PREFIX/bin/minimax-statusline
+#   - Patches ~/.claude/settings.json so the CLI calls it as statusLine
 #   - Optionally writes ~/.config/statusline/config.toml from config.example.toml
 #   - Detects macOS (bash 3.2) and Linux (bash 4+) for sanity checks
 #
@@ -15,8 +15,8 @@ REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 PREFIX="${PREFIX:-$HOME/.local}"
 BIN_DIR="$PREFIX/bin"
 SETTINGS_JSON="${CLAUDE_SETTINGS_JSON:-$HOME/.claude/settings.json}"
-BIN_PATH="$BIN_DIR/claude-statusline"
-SCRIPT_SRC="$REPO_DIR/statusline.sh"
+BIN_PATH="$BIN_DIR/minimax-statusline"
+SCRIPT_SRC="$REPO_DIR/minimax-statusline.sh"
 
 say()  { printf '→ %s\n' "$*"; }
 warn() { printf '! %s\n' "$*" >&2; }
@@ -105,10 +105,10 @@ fi
 
 cat <<EOF
 
-✅ claude-statusline installed.
+✅ minimax-statusline installed.
 
 Next:
-  1. Restart Claude Code (or run 'claude --continue') to pick up the new statusline.
+  1. Restart MiniMax (or run 'claude --continue') to pick up the new statusline.
   2. Edit $CFG_FILE to customize theme, provider, and layout.
   3. Try $BIN_PATH --doctor for a diagnostic dump.
   4. Try STATUSLINE_THEME=vivid $BIN_PATH < some-json.json to preview a theme.

@@ -1,4 +1,4 @@
-"""tiny_toml — minimal TOML reader for the subset claude-statusline uses.
+"""tiny_toml — minimal TOML reader for the subset minimax-statusline uses.
 
 Supports:
   - [section] and [section.subsection] headers

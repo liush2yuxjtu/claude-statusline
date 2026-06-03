@@ -17,7 +17,7 @@ icon_high  = "⚡"   # used when r >= high_icon_pct
 icon_mid   = "🔋"   # used otherwise
 icon_low   = "🪫"   # used when r < low_icon_pct
 
-# Effort level colors. Keys match what Claude Code emits (lower-case).
+# Effort level colors. Keys match what MiniMax emits (lower-case).
 [effort]
 default = "faint"
 low     = "bold_blue"

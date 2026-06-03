@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# statusline.sh — Claude Code statusline (refactored, public release)
+# minimax-statusline.sh — MiniMax statusline (refactored, public release)
 #
 # Layout:  <dir> │ <branch> │ <effort> │ ctx: NN% | 5h: ⚡ ████ 98% | @reset
 #
-# Inputs:  JSON from Claude Code on stdin (see docs/configuration.md)
+# Inputs:  JSON from MiniMax on stdin (see docs/configuration.md)
 # Config:  ~/.config/statusline/config.toml  (see config.example.toml)
 # Theme:   bundled in themes/  (default, minimal, vivid, solarized)
 # Cache:   ~/.cache/statusline/api.json  (auto-created; 60s TTL)
@@ -27,7 +27,7 @@ set +o pipefail
 IFS=$(printf ' \t\n')
 
 VERSION="0.1.0"
-SCRIPT_NAME="claude-statusline"
+SCRIPT_NAME="minimax-statusline"
 SCRIPT_DIR_LIB="$(cd "$(dirname "$0")" && pwd)/lib"
 
 # ─── Defaults (overridden by config.toml) ────────────────────────────────
@@ -250,16 +250,16 @@ if [ "${1:-}" = "--version" ] || [ "${1:-}" = "-V" ]; then
 fi
 if [ "${1:-}" = "--help" ] || [ "${1:-}" = "-h" ]; then
   cat <<'EOF'
-claude-statusline — Claude Code statusline (customizable, themeable)
+minimax-statusline — MiniMax statusline (customizable, themeable)
 
 USAGE
-  statusline.sh                 read JSON from stdin, print the statusline
-  statusline.sh --version       print version and exit
-  statusline.sh --help          print this help
-  statusline.sh --doctor        check deps, network, and config
-  statusline.sh --dump-config   show resolved config + theme
-  statusline.sh --self-test     run with a fixture and print the result
-  statusline.sh --init-config   write ~/.config/statusline/config.toml
+  minimax-statusline.sh                 read JSON from stdin, print the statusline
+  minimax-statusline.sh --version       print version and exit
+  minimax-statusline.sh --help          print this help
+  minimax-statusline.sh --doctor        check deps, network, and config
+  minimax-statusline.sh --dump-config   show resolved config + theme
+  minimax-statusline.sh --self-test     run with a fixture and print the result
+  minimax-statusline.sh --init-config   write ~/.config/statusline/config.toml
                                 from the bundled example
 
 ENV
@@ -316,7 +316,7 @@ fi
 # ─── Mode: --dump-config ───────────────────────────────────────────────
 if [ "${1:-}" = "--dump-config" ]; then
   {
-    printf '# claude-statusline %s — resolved config\n\n' "$VERSION"
+    printf '# minimax-statusline %s — resolved config\n\n' "$VERSION"
     printf 'config_file:   %s\n' "${CFG_FILE:-(none found)}"
     printf 'theme_file:    %s\n' "${THEME_FILE:-(none)}"
     printf 'theme:         %s\n' "$THEME"
@@ -335,7 +335,7 @@ fi
 
 # ─── Mode: --doctor ────────────────────────────────────────────────────
 if [ "${1:-}" = "--doctor" ]; then
-  printf '== claude-statusline doctor ==\n'
+  printf '== minimax-statusline doctor ==\n'
   printf 'version:       %s\n' "$VERSION"
   printf 'bash:          %s (%s)\n' "$BASH_VERSION" "$(command -v bash)"
   printf 'python3:       %s\n' "$(command -v python3 || echo MISSING)"
@@ -358,7 +358,7 @@ if [ "${1:-}" = "--self-test" ]; then
     exit 1
   fi
   # Re-invoke with absolute path so subprocess finds lib/ etc.
-  bash "$SCRIPT_DIR_REAL/statusline.sh" < "$fixture"
+  bash "$SCRIPT_DIR_REAL/minimax-statusline.sh" < "$fixture"
   exit $?
 fi
 

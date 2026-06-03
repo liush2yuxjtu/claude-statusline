@@ -16,7 +16,7 @@ or to a path to your own theme file.
 Switch at runtime without changing your config:
 
 ```bash
-STATUSLINE_THEME=vivid claude-statusline < some-stdin.json
+STATUSLINE_THEME=vivid minimax-statusline < some-stdin.json
 ```
 
 ## Theme schema
@@ -41,7 +41,7 @@ icon_high  = "⚡"         # used when r >= high_icon_pct
 icon_mid   = "🔋"         # used otherwise
 icon_low   = "🪫"         # used when r < low_icon_pct
 
-# Effort level colors (the key is what Claude Code emits, lower-cased)
+# Effort level colors (the key is what MiniMax emits, lower-cased)
 [effort]
 default = "faint"
 low     = "bold_blue"
@@ -130,9 +130,9 @@ Set `NO_COLOR=1` to override any theme and strip all colors.
 
 ## Quick preview
 
-`claude-statusline` reads JSON on stdin, so you can preview a theme
-without touching Claude Code:
+`minimax-statusline` reads JSON on stdin, so you can preview a theme
+without touching MiniMax:
 
 ```bash
-cat tests/fixtures/basic.json | STATUSLINE_THEME=vivid claude-statusline
+cat tests/fixtures/basic.json | STATUSLINE_THEME=vivid minimax-statusline
 ```

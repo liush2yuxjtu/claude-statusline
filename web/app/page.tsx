@@ -44,24 +44,24 @@ const INSTALL_TABS = [
   {
     id: "curl",
     label: "curl",
-    body: `git clone https://github.com/liush2yuxjtu/claude-statusline
-cd claude-statusline
+    body: `git clone https://github.com/liush2yuxjtu/minimax-statusline
+cd minimax-statusline
 ./install.sh`,
   },
   {
     id: "brew",
     label: "brew",
-    body: `brew install liush2yuxjtu/tap/claude-statusline`,
+    body: `brew install liush2yuxjtu/tap/minimax-statusline`,
   },
   {
     id: "npm",
     label: "npm",
-    body: `npm install -g @liushiyumathxjtu/claude-statusline`,
+    body: `npm install -g @liushiyumathxjtu/minimax-statusline`,
   },
   {
     id: "vsce",
     label: "VS Code",
-    body: `code --install-extension liush2yuxjtu.claude-statusline`,
+    body: `code --install-extension liush2yuxjtu.minimax-statusline`,
   },
 ];
 
@@ -71,10 +71,10 @@ export default function HomePage() {
 
   return (
     <main>
-      <h1>claude-statusline</h1>
+      <h1>minimax-statusline</h1>
       <p className="muted">
         A configurable, themeable, provider-pluggable statusline for the{" "}
-        <a href="https://docs.claude.com/en/docs/claude-code">Claude Code</a> TUI.
+        <a href="https://docs.claude.com/en/docs/minimax">MiniMax</a> TUI.
       </p>
 
       <div className="tty" role="img" aria-label="statusline example">
@@ -138,7 +138,7 @@ export default function HomePage() {
         <h2>Themes</h2>
         <p className="muted">
           Set <code>display.theme</code> in your config, or override with{" "}
-          <code>STATUSLINE_THEME=vivid claude-statusline</code>.
+          <code>STATUSLINE_THEME=vivid minimax-statusline</code>.
         </p>
         <div className="themes">
           {THEMES.map((t) => (
@@ -156,8 +156,8 @@ export default function HomePage() {
         <h2>Configurable</h2>
         <p>
           Everything is in <code>~/.config/statusline/config.toml</code>. Run{" "}
-          <code>claude-statusline --init-config</code> to write a starter, then{" "}
-          <code>claude-statusline --dump-config</code> to see what got resolved.
+          <code>minimax-statusline --init-config</code> to write a starter, then{" "}
+          <code>minimax-statusline --dump-config</code> to see what got resolved.
         </p>
         <pre><code>{`# Quick example
 [provider]
@@ -177,12 +177,12 @@ layout = ["dir", "branch", "effort", "ctx", "five_hour"]
       </section>
 
       <footer>
-        <a href="https://github.com/liush2yuxjtu/claude-statusline">GitHub</a>
-        <a href="https://marketplace.visualstudio.com/items?itemName=liush2yuxjtu.claude-statusline">
+        <a href="https://github.com/liush2yuxjtu/minimax-statusline">GitHub</a>
+        <a href="https://marketplace.visualstudio.com/items?itemName=liush2yuxjtu.minimax-statusline">
           VS Code Marketplace
         </a>
-        <a href="https://open-vsx.org/extension/liush2yuxjtu/claude-statusline">OpenVSX</a>
-        <a href="https://www.npmjs.com/package/@liushiyumathxjtu/claude-statusline">npm</a>
+        <a href="https://open-vsx.org/extension/liush2yuxjtu/minimax-statusline">OpenVSX</a>
+        <a href="https://www.npmjs.com/package/@liushiyumathxjtu/minimax-statusline">npm</a>
         <a href="https://github.com/liush2yuxjtu/homebrew-tap">Homebrew tap</a>
         <span className="muted" style={{ marginLeft: 16 }}>MIT · {new Date().getFullYear()}</span>
       </footer>

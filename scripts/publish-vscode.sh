@@ -28,7 +28,7 @@ echo "→ building"
 npx tsc -p .
 
 VERSION=$(node -p "require('./package.json').version")
-VSIX="claude-statusline-${VERSION}.vsix"
+VSIX="minimax-statusline-${VERSION}.vsix"
 
 echo "→ packaging $VSIX"
 npx vsce package --no-dependencies --out "$VSIX"

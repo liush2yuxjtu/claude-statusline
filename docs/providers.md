@@ -1,7 +1,7 @@
 # Providers
 
 The 5h segment ("5h: ⚡ ███████░░░ 98% | @06-03 20:00") needs two pieces
-of data: the remaining percent (0..100) and a reset time. claude-statusline
+of data: the remaining percent (0..100) and a reset time. minimax-statusline
 fetches these from a configurable **provider** backend.
 
 ## Built-in providers

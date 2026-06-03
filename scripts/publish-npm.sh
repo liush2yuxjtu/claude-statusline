@@ -17,5 +17,5 @@ echo "→ publishing to npm (--access public)"
 npm publish --access public
 
 VERSION=$(node -p "require('./package.json').version")
-echo "✓ done. Listing at https://www.npmjs.com/package/@liushiyumathxjtu/claude-statusline"
-echo "  install: npm install -g @liushiyumathxjtu/claude-statusline@$VERSION"
+echo "✓ done. Listing at https://www.npmjs.com/package/@liushiyumathxjtu/minimax-statusline"
+echo "  install: npm install -g @liushiyumathxjtu/minimax-statusline@$VERSION"

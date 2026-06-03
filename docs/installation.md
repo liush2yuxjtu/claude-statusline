@@ -1,8 +1,8 @@
 # Installation
 
-claude-statusline is a bash script that Claude Code calls every turn (via
+minimax-statusline is a bash script that MiniMax calls every turn (via
 `statusLine.command` in `~/.claude/settings.json`). The install path just
-needs to (1) put the script somewhere on `PATH`, and (2) tell Claude Code
+needs to (1) put the script somewhere on `PATH`, and (2) tell MiniMax
 where it is.
 
 The bundled `install.sh` does both, idempotently.
@@ -10,30 +10,30 @@ The bundled `install.sh` does both, idempotently.
 ## Method 1 — `git clone` + `./install.sh` (most portable)
 
 ```bash
-git clone https://github.com/liush2yuxjtu/claude-statusline
-cd claude-statusline
+git clone https://github.com/liush2yuxjtu/minimax-statusline
+cd minimax-statusline
 ./install.sh
 ```
 
 What it does:
 
-1. Copies `statusline.sh` to `~/.local/bin/claude-statusline` (overwriting a
-   previous install, after backing it up to `claude-statusline.prev`).
+1. Copies `statusline.sh` to `~/.local/bin/minimax-statusline` (overwriting a
+   previous install, after backing it up to `minimax-statusline.prev`).
 2. Patches `~/.claude/settings.json` so `statusLine.command` points at the
    new path. If the file doesn't exist yet, it creates it.
 3. Writes `~/.config/statusline/config.toml` from the bundled example (only
    if no config exists yet).
-4. Smoke-tests with `claude-statusline --version`.
+4. Smoke-tests with `minimax-statusline --version`.
 
 Re-run safe: the script detects existing installs and offers to upgrade.
 
 ## Method 2 — Homebrew (macOS / Linuxbrew)
 
 ```bash
-brew install liush2yuxjtu/tap/claude-statusline
+brew install liush2yuxjtu/tap/minimax-statusline
 ```
 
-Formula: <https://github.com/liush2yuxjtu/homebrew-tap/blob/main/Formula/claude-statusline.rb>
+Formula: <https://github.com/liush2yuxjtu/homebrew-tap/blob/main/Formula/minimax-statusline.rb>
 
 Then patch `~/.claude/settings.json` manually:
 
@@ -41,7 +41,7 @@ Then patch `~/.claude/settings.json` manually:
 {
   "statusLine": {
     "type": "command",
-    "command": "/opt/homebrew/bin/claude-statusline"
+    "command": "/opt/homebrew/bin/minimax-statusline"
   }
 }
 ```
@@ -52,7 +52,7 @@ The Homebrew formula installs a small wrapper that execs the bundled
 ## Method 3 — npm (works on Windows)
 
 ```bash
-npm install -g @liushiyumathxjtu/claude-statusline
+npm install -g @liushiyumathxjtu/minimax-statusline
 ```
 
 The npm package ships a tiny Node wrapper (`bin/statusline.js`) that
@@ -65,7 +65,7 @@ Then patch `~/.claude/settings.json`:
 {
   "statusLine": {
     "type": "command",
-    "command": "claude-statusline"
+    "command": "minimax-statusline"
   }
 }
 ```
@@ -77,53 +77,53 @@ and renders the result in the VS Code status bar. You **also** need the
 bash script installed (Method 1, 2, or 3) for the extension to work.
 
 ```bash
-code --install-extension liush2yuxjtu.claude-statusline
+code --install-extension liush2yuxjtu.minimax-statusline
 ```
 
-Or install from the Marketplace UI: search for "claude-statusline".
+Or install from the Marketplace UI: search for "minimax-statusline".
 
 ## Method 5 — One-liner (advanced)
 
 ```bash
-curl -sSfL https://raw.githubusercontent.com/liush2yuxjtu/claude-statusline/main/install.sh | bash
+curl -sSfL https://raw.githubusercontent.com/liush2yuxjtu/minimax-statusline/main/install.sh | bash
 ```
 
-This clones the repo to `/tmp/claude-statusline-$$`, runs the install, and
+This clones the repo to `/tmp/minimax-statusline-$$`, runs the install, and
 removes the clone. Useful for quick smoke-testing on a fresh machine.
 
 ## Verify the install
 
 ```bash
-claude-statusline --version
-claude-statusline --doctor
-claude-statusline --dump-config
+minimax-statusline --version
+minimax-statusline --doctor
+minimax-statusline --dump-config
 ```
 
-Then restart Claude Code. The bottom of the TUI should now show the new
+Then restart MiniMax. The bottom of the TUI should now show the new
 statusline. If it doesn't, check the Output panel in your editor (if using
-the VS Code extension) or run `claude-statusline` directly with a
+the VS Code extension) or run `minimax-statusline` directly with a
 hand-built JSON:
 
 ```bash
-echo '{"cwd":"/tmp","model":{"display_name":"x"},"effort":{"level":"default"}}' | claude-statusline
+echo '{"cwd":"/tmp","model":{"display_name":"x"},"effort":{"level":"default"}}' | minimax-statusline
 ```
 
 ## Uninstall
 
 ```bash
 # If installed via Method 1, 2, 3, or 5:
-curl -sSfL https://raw.githubusercontent.com/liush2yuxjtu/claude-statusline/main/uninstall.sh | bash
+curl -sSfL https://raw.githubusercontent.com/liush2yuxjtu/minimax-statusline/main/uninstall.sh | bash
 # or, if you still have the repo:
 ./uninstall.sh
 
 # If installed via Homebrew:
-brew uninstall liush2yuxjtu/tap/claude-statusline
+brew uninstall liush2yuxjtu/tap/minimax-statusline
 
 # If installed via npm:
-npm uninstall -g @liushiyumathxjtu/claude-statusline
+npm uninstall -g @liushiyumathxjtu/minimax-statusline
 
 # If installed via VS Code extension:
-code --uninstall-extension liush2yuxjtu.claude-statusline
+code --uninstall-extension liush2yuxjtu.minimax-statusline
 ```
 
 To also nuke the config + cache:

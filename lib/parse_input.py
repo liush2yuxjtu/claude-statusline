@@ -1,6 +1,6 @@
-"""parse_input — extract the fields a statusline needs from Claude Code's stdin JSON.
+"""parse_input — extract the fields a statusline needs from MiniMax's stdin JSON.
 
-Input: a JSON object on stdin matching Claude Code's statusline contract.
+Input: a JSON object on stdin matching MiniMax's statusline contract.
 Output: a single line of NUL-separated fields, in this fixed order:
   0  cwd
   1  model name (display_name or id)
@@ -40,7 +40,7 @@ def _first(d: dict, *keys: str, default: str = "") -> str:
 
 
 def parse_stdin(text: str) -> dict:
-    """Parse Claude Code's stdin JSON. Returns a dict of normalized fields."""
+    """Parse MiniMax's stdin JSON. Returns a dict of normalized fields."""
     try:
         d = json.loads(text)
     except Exception:

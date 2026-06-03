@@ -1,4 +1,4 @@
-# claude-statusline configuration
+# minimax-statusline configuration
 # Copy to ~/.config/statusline/config.toml (or set STATUSLINE_CONFIG to override)
 # All values shown are the defaults; omit a key to use the default.
 
@@ -30,7 +30,7 @@ timeout_seconds = 5
 # jq_path_boost = ".boost_permille"          # optional, 0..1000
 
 # ─── Model context window table ──────────────────────────────────────────
-# Used when Claude Code's context_window.context_window_size is unreliable.
+# Used when MiniMax's context_window.context_window_size is unreliable.
 # Substring match, case-insensitive. First match wins.
 [model.context]
 "MiniMax-M3"  = 1_000_000

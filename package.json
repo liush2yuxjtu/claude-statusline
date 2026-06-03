@@ -1,24 +1,23 @@
 {
-  "name": "@liushiyumathxjtu/claude-statusline",
+  "name": "@liushiyumathxjtu/minimax-statusline",
   "version": "0.1.0",
-  "description": "A configurable, themeable, provider-pluggable statusline for Claude Code TUI.",
+  "description": "A configurable, themeable, provider-pluggable statusline for MiniMax CLI.",
   "license": "MIT",
   "author": "Liu Shiyu <liush2yuxjtu@users.noreply.github.com>",
-  "homepage": "https://github.com/liush2yuxjtu/claude-statusline#readme",
+  "homepage": "https://github.com/liush2yuxjtu/minimax-statusline#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/liush2yuxjtu/claude-statusline.git"
+    "url": "git+https://github.com/liush2yuxjtu/minimax-statusline.git"
   },
   "bugs": {
-    "url": "https://github.com/liush2yuxjtu/claude-statusline/issues"
+    "url": "https://github.com/liush2yuxjtu/minimax-statusline/issues"
   },
   "keywords": [
-    "claude",
-    "claude-code",
+    "minimax",
+    "minimax-coding-plan",
     "statusline",
     "tui",
-    "terminal",
-    "minimax"
+    "terminal"
   ],
   "engines": {
     "node": ">=18"
@@ -29,10 +28,10 @@
     "win32"
   ],
   "bin": {
-    "claude-statusline": "bin/statusline.js"
+    "minimax-statusline": "bin/minimax-statusline.js"
   },
   "files": [
-    "statusline.sh",
+    "minimax-statusline.sh",
     "lib/",
     "themes/",
     "config.example.toml",
