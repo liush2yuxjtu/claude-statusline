@@ -26,7 +26,7 @@ set +u
 set +o pipefail
 IFS=$(printf ' \t\n')
 
-VERSION="0.1.0"
+VERSION="0.2.0"
 SCRIPT_NAME="minimax-statusline"
 SCRIPT_DIR_LIB="$(cd "$(dirname "$0")" && pwd)/lib"
 

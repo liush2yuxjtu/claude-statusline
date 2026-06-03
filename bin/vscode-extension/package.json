@@ -2,7 +2,7 @@
   "name": "minimax-statusline",
   "displayName": "Claude Statusline",
   "description": "Mirror the minimax-statusline TUI in the VS Code status bar. Configurable themes, provider-pluggable.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "liush2yuxjtu",
   "license": "MIT",
   "engines": {
