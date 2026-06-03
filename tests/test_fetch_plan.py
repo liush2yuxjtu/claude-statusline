@@ -37,8 +37,8 @@ class TestProviderMinimax(unittest.TestCase):
 
     def test_http_error(self) -> None:
         from urllib.error import HTTPError
-        with mock.patch.object(fetch_plan.urlopen,
-                               side_effect=HTTPError("http://x", 401, "auth", {}, None)):
+        with mock.patch("fetch_plan.urlopen",
+                        side_effect=HTTPError("http://x", 401, "auth", {}, None)):
             out = fetch_plan.provider_minimax("tok", {}, self.tmp)
         self.assertFalse(out["ok"])
         self.assertEqual(out["error"], "http-401")
@@ -52,7 +52,7 @@ class TestProviderMinimax(unittest.TestCase):
                  "interval_boost_permille": 250}
             ]
         }
-        with mock.patch.object(fetch_plan.urlopen) as m:
+        with mock.patch("fetch_plan.urlopen") as m:
             m.return_value.__enter__.return_value.read.return_value = json.dumps(fake).encode()
             out = fetch_plan.provider_minimax("tok", {"cache_ttl_seconds": 60}, self.tmp)
         self.assertTrue(out["ok"])
@@ -69,7 +69,7 @@ class TestProviderMinimax(unittest.TestCase):
         with open(cache, "w") as f:
             json.dump({"ok": True, "percent": 50, "reset": "06-03 16:00",
                        "boost": "", "error": "", "stale": False}, f)
-        with mock.patch.object(fetch_plan.urlopen) as m:
+        with mock.patch("fetch_plan.urlopen") as m:
             m.return_value.read.side_effect = AssertionError("should not call network")
             out = fetch_plan.provider_minimax("tok", {"cache_ttl_seconds": 60}, self.tmp)
         self.assertTrue(out["ok"])
@@ -85,7 +85,7 @@ class TestProviderCustom(unittest.TestCase):
 
     def test_success_with_paths(self) -> None:
         fake = {"data": {"remaining": 42, "next": 1748976000000, "boost_permille": 0}}
-        with mock.patch.object(fetch_plan.urlopen) as m:
+        with mock.patch("fetch_plan.urlopen") as m:
             m.return_value.__enter__.return_value.read.return_value = json.dumps(fake).encode()
             out = fetch_plan.provider_custom(
                 "tok",

@@ -35,9 +35,12 @@ class TestParseStdin(unittest.TestCase):
 
     def test_opus_200k_fixture(self) -> None:
         d = parse_input.parse_stdin(_fixture("opus-200k.json"))
-        self.assertEqual(d["model"], "claude-opus-4-7")
+        # parse_input prefers display_name over id; the fixture sets display_name.
+        self.assertEqual(d["model"], "Claude Opus 4.7")
         self.assertEqual(d["effort"], "max")
-        self.assertEqual(d["ctx_pct"], "3")
+        # parse_stdin recomputes from total/used when both are present
+        # (200000 - 195000) / 200000 * 100 = 2.5 → banker's-round to 2.
+        self.assertEqual(d["ctx_pct"], "2")
 
     def test_garbage_input(self) -> None:
         d = parse_input.parse_stdin("not json at all")
@@ -68,7 +71,7 @@ class TestParseStdin(unittest.TestCase):
 
 class TestModelContextMax(unittest.TestCase):
     def test_first_substring_wins(self) -> None:
-        table = {"MiniMax-M3": 1_000_000, "opus-4": 200_000}
+        table = {"MiniMax-M3": 1_000_000, "opus-4": 200_000, "haiku-4": 200_000}
         self.assertEqual(parse_input.model_context_max("MiniMax-M3", table), 1_000_000)
         self.assertEqual(parse_input.model_context_max("claude-opus-4-7", table), 200_000)
         self.assertEqual(parse_input.model_context_max("claude-haiku-4-5", table), 200_000)
@@ -78,6 +81,14 @@ class TestModelContextMax(unittest.TestCase):
 
     def test_empty_model(self) -> None:
         self.assertIsNone(parse_input.model_context_max("", {"x": 1}))
+
+    def test_first_substring_in_iteration_order(self) -> None:
+        # Whichever substring is checked first wins. We pick a table where
+        # the longer pattern is the more specific match.
+        table = {"opus-4-7": 500_000, "opus-4": 200_000}
+        # Both substrings are in "claude-opus-4-7"; the one Python sees first
+        # in dict iteration wins. dict preserves insertion order in 3.7+.
+        self.assertEqual(parse_input.model_context_max("claude-opus-4-7", table), 500_000)
 
 
 class TestApplyModelOverride(unittest.TestCase):
