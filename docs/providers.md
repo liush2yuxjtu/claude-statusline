@@ -1,20 +1,12 @@
-# Providers
+# 提供方
 
-The 5h segment ("5h: ⚡ ███████░░░ 98% | @06-03 20:00") needs two pieces
-of data: the remaining percent (0..100) and a reset time. minimax-statusline
-fetches these from a configurable **provider** backend.
+5h 段（"5h: ⚡ ███████░░░ 98% | @06-03 20:00"）需要两样数据：剩余百分位（0..100）和重置时间。`minimax-statusline` 从可配置的 **提供方** 后端取这两样数据。
 
-## Built-in providers
+## 内置提供方
 
-### `minimax` (default)
+### `minimax`（默认）
 
-Queries `https://api.minimax.chat/v1/coding_plan/remains` with a Bearer
-token from `$ANTHROPIC_AUTH_TOKEN` (configurable via `[provider] token_env`).
-Extracts the `general` model from `model_remains[]` and formats
-`current_interval_remaining_percent` and `end_time` (ms epoch).
-
-This is the original behavior of the personal script this project forked
-from.
+向 `https://api.minimax.chat/v1/coding_plan/remains` 发请求，Bearer token 从 `$ANTHROPIC_AUTH_TOKEN` 取（可通过 `[provider] token_env` 改）。从 `model_remains[]` 里挑 `model_name == "general"` 的项，把 `current_interval_remaining_percent` 和 `end_time`（毫秒时间戳）格式化。
 
 ```toml
 [provider]
@@ -24,23 +16,18 @@ token_env = "ANTHROPIC_AUTH_TOKEN"
 
 ### `none`
 
-Hides the 5h segment entirely. Use this if you don't have a MiniMax
-Coding Plan token, or if you don't care about the 5h data.
+完全隐藏 5h 段。如果你没有 MiniMax Coding Plan token，或者不在乎 5h 数据，用这个。
 
 ```toml
 [provider]
 name = "none"
 ```
 
-The segment is omitted from the layout (not just empty). If you want a
-visual placeholder instead, use `custom` and have it return `null` for
-`jq_path_percent`.
+段会从 layout 里直接消失（不是空着显示）。如果想要个占位符，用 `custom` 并让 `jq_path_percent` 返回 `null`。
 
 ### `custom`
 
-Bring your own HTTP endpoint. Set the URL, method, auth header, and
-`jq_path_*` (slash-or-dot path) to extract the data. The script caches
-the response for `cache_ttl_seconds` (default 60).
+自己接 HTTP 端点。设 URL、方法、鉴权头、以及 `jq_path_*`（点路径或斜杠路径）来抽数据。响应会缓存 `cache_ttl_seconds` 秒（默认 60）。
 
 ```toml
 [provider]
@@ -49,73 +36,61 @@ cache_ttl_seconds = 60
 
 [provider.custom]
 url             = "https://my-api.example.com/usage"
-method          = "GET"                    # GET or POST
-auth_header     = "Authorization"          # "" to skip the auth header
+method          = "GET"                    # GET 或 POST
+auth_header     = "Authorization"          # 留空跳过鉴权
 auth_prefix     = "Bearer "
 extra_headers   = { "X-Org" = "acme" }
-jq_path_percent = "data.remaining.percent" # dot-path; resolves dict keys and list indices
-jq_path_reset   = "data.next_reset"        # ISO ms epoch or ISO string
-jq_path_boost   = "data.boost_permille"    # optional; 0..1000 permille, e.g. 250 = +25%
+jq_path_percent = "data.remaining.percent" # 点路径；解析字典 key 和列表下标
+jq_path_reset   = "data.next_reset"        # ISO 毫秒时间戳或 ISO 字符串
+jq_path_boost   = "data.boost_permille"    # 可选；0..1000 permille，250 表示 +25%
 ```
 
-The script will read the token from `[provider] token_env` (default
-`ANTHROPIC_AUTH_TOKEN`) and attach it as
-`Authorization: Bearer <token>` unless you override `auth_header` /
-`auth_prefix`.
+脚本会从 `[provider] token_env`（默认 `ANTHROPIC_AUTH_TOKEN`）取 token，按 `Authorization: Bearer <token>` 加上（除非覆盖 `auth_header` / `auth_prefix`）。
 
-If the network call fails and a cached value exists from a previous
-successful call, the cached value is returned with `stale: true` (and
-the statusline adds a `·cached` suffix so you know).
+如果网络请求失败、但上次成功的有缓存，会返回缓存值并标 `stale: true`（状态条加 `·cached` 后缀，提示数据不是新鲜的）。
 
-## Error classification
+## 错误分类
 
-Errors are bucketed and rendered with a per-theme color:
+错误按类型分桶，每桶用主题色渲染：
 
-| Class | When | Theme key |
+| 类别 | 触发条件 | 主题 key |
 |---|---|---|
-| `no-token` | Token env var is empty/unset | `error.no_token` (default: silent) |
-| `net` | DNS / connection / read timeout | `error.net` (default: red) |
-| `auth` | HTTP 401/403 | `error.auth` (default: red) |
-| `http-N` | Any other HTTP error (404, 500, …) | `error.http` (default: yellow) |
-| `generic` | Unexpected exception | `error.generic` (default: red) |
+| `no-token` | token 环境变量空 / 未设 | `error.no_token`（默认：静默） |
+| `net` | DNS / 连接 / 读超时 | `error.net`（默认：红） |
+| `auth` | HTTP 401/403 | `error.auth`（默认：红） |
+| `http-N` | 其它 HTTP 错误（404, 500…） | `error.http`（默认：黄） |
+| `generic` | 意外异常 | `error.generic`（默认：红） |
 
-Override the colors in your theme (`themes/<name>.toml`):
+在主题文件里覆盖颜色（`themes/<name>.toml`）：
 
 ```toml
 [error]
-no_token = ""            # silent — don't show anything for missing token
-net      = "bold_yellow" # show "⚠ net" in yellow instead of red
+no_token = ""            # 静默 —— token 缺失时什么都不显示
+net      = "bold_yellow" # 把 "⚠ net" 从红换成黄
 auth     = "bold_red"
 http     = "faint"
 generic  = "bold_red"
 ```
 
-## Caching
+## 缓存
 
-The cache is a single JSON file at `${STATUSLINE_CACHE_DIR:-~/.cache/statusline}/api.json`.
-On every provider call, the script checks the file's mtime. If it's
-younger than `cache_ttl_seconds`, the cached value is returned and the
-provider is **not** called.
+缓存是 `${STATUSLINE_CACHE_DIR:-~/.cache/statusline}/api.json` 这一个 JSON 文件。每次调提供方时检查 mtime——比 `cache_ttl_seconds` 新就直接用缓存、不打提供方。
 
-When a network call fails AND a cached value exists, the cached value is
-returned with `stale: true`. The statusline adds a `·cached` suffix so
-you know the data is not fresh.
+如果网络请求失败、又有上次成功的缓存，会用缓存值 + `stale: true`，状态条加 `·cached` 后缀。
 
-To clear the cache:
+清缓存：
 
 ```bash
 rm -rf ~/.cache/statusline
 ```
 
-To disable caching:
+关缓存：
 
 ```toml
 [provider]
 cache_ttl_seconds = 0
 ```
 
-## Writing a new built-in provider
+## 新增内置提供方
 
-If you maintain an internal usage API and want it as a first-class
-provider, see `lib/fetch_plan.py` — add a function to the `PROVIDERS`
-dict, then update `config.example.toml` to document it. Send a PR.
+如果你有内部 usage API 想作为一等提供方，看 `lib/fetch_plan.py` —— 加个函数进 `PROVIDERS` 字典，再更新 `config.example.toml` 写清楚，发个 PR。

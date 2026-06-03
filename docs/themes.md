@@ -1,47 +1,45 @@
-# Themes
+# 主题
 
-A theme is a TOML file that controls colors, glyphs, and bar characters.
-Set `display.theme` in your config to one of the bundled themes by name,
-or to a path to your own theme file.
+主题是个 TOML 文件，控制颜色、字符、电条字符。把 `display.theme` 配成自带主题的名字，或者你自定义的 .toml 文件路径。
 
-## Bundled themes
+## 自带主题
 
-| Name | Style | Best for |
+| 名字 | 风格 | 适合 |
 |---|---|---|
-| `default` | Bold ANSI colors, `🌿` branch, `│` sep, `█/░` bar | Most users |
-| `minimal` | No colors, `@` branch, `\|` sep, `#/.` bar | tmux / screen / no-color terminals |
-| `vivid` | High-contrast bright colors, `★` branch, `▌` sep, `▓/░` bar | Accessibility, light-on-dark |
-| `solarized` | Solarized Base3 mapped to ANSI, `❦` branch, `│` sep, `▰/▱` bar | Solarized fans |
+| `default` | 粗体 ANSI 色 + `🌿` 分支 + `│` 分隔 + `█/░` 条 | 大多数人 |
+| `minimal` | 无颜色 + `@` 分支 + `\|` 分隔 + `#/.` 条 | tmux / screen / 无色终端 |
+| `vivid` | 高对比亮色 + `★` 分支 + `▌` 分隔 + `▓/░` 条 | 辅助功能、亮底 |
+| `solarized` | Solarized Base3 调色 + `❦` 分支 + `▰/▱` 条 | Solarized 党 |
 
-Switch at runtime without changing your config:
+不改 config 临时试主题：
 
 ```bash
 STATUSLINE_THEME=vivid minimax-statusline < some-stdin.json
 ```
 
-## Theme schema
+## 主题文件格式
 
-A theme is a flat TOML with these keys. Defaults shown.
+主题是个平铺的 TOML，下面是全部可配 key 和默认值。
 
 ```toml
-# Top-level colors (one of: black red green yellow blue magenta cyan white,
-#                       or bold_<color>, or faint/dim, or "" to skip)
+# 顶层颜色（取值：black red green yellow blue magenta cyan white，
+#                  或 bold_<color>，或 faint/dim，或 "" 跳过）
 dir_color    = "bold_cyan"
 branch_color = "bold_yellow"
 sep_color    = "dim"
 
-# Glyphs
-branch_glyph = "🌿"      # anything: emoji, ASCII, blank
+# 字符
+branch_glyph = "🌿"      # 任意：emoji、ASCII、空格
 sep_glyph    = "│"
 
-# Battery / 5h bar
-bar_filled = "█"          # any block char
+# 5h 电池条
+bar_filled = "█"          # 任意块字符
 bar_empty  = "░"
-icon_high  = "⚡"         # used when r >= high_icon_pct
-icon_mid   = "🔋"         # used otherwise
-icon_low   = "🪫"         # used when r < low_icon_pct
+icon_high  = "⚡"         # r >= high_icon_pct 时
+icon_mid   = "🔋"         # 其它时候
+icon_low   = "🪫"         # r < low_icon_pct 时
 
-# Effort level colors (the key is what MiniMax emits, lower-cased)
+# Effort 档颜色（key 是 CLI 发出的 effort level，小写）
 [effort]
 default = "faint"
 low     = "bold_blue"
@@ -49,33 +47,33 @@ medium  = "bold_cyan"
 high    = "bold_magenta"
 max     = "bold_magenta"
 
-# 5h bar colors (one of high/mid/low)
+# 5h 条颜色（high / mid / low 三档）
 [bar]
 high = "bold_green"
 mid  = "bold_yellow"
 low  = "bold_red"
 
-# ctx remaining-percent colors
+# ctx 剩余百分位颜色
 [ctx]
 high = "bold_green"
 mid  = "bold_yellow"
 low  = "bold_red"
 
-# Provider error states
+# 提供方错误状态
 [error]
-no_token = ""            # silent — don't render anything when token is missing
+no_token = ""            # 静默 —— token 缺失时什么都不显示
 net      = "bold_red"
 auth     = "bold_red"
 http     = "bold_yellow"
 generic  = "bold_red"
 ```
 
-## Writing your own
+## 写自己的
 
-Create `~/.config/statusline/themes/my-theme.toml`:
+在 `~/.config/statusline/themes/my-theme.toml` 里写一份：
 
 ```toml
-# A retro green-phosphor theme — all green, no emoji, ASCII only.
+# 复古绿磷光主题 —— 全绿、无 emoji、纯 ASCII
 dir_color    = ""
 branch_color = "bold_green"
 sep_color    = "faint"
@@ -112,26 +110,23 @@ http     = "bold_green"
 generic  = "bold_green"
 ```
 
-Then set `display.theme = "my-theme"` in your config. The script looks
-for `<name>.toml` in `<script_dir>/themes/` first, then falls back to a
-direct path.
+然后在 config 里设 `display.theme = "my-theme"`。脚本会先在 `<脚本目录>/themes/` 找 `<name>.toml`，找不到再用直接路径。
 
-## Color names recognized
+## 颜色命名
 
-| Name | ANSI | Notes |
+| 名字 | ANSI | 备注 |
 |---|---|---|
-| `black` `red` `green` `yellow` `blue` `magenta` `cyan` `white` | 8 standard | normal intensity |
-| `bold_black` `bold_red` … `bold_white` | 8 bright | bold/bright |
-| `faint` | dim white | subtle, low contrast |
-| `dim` | dim gray | dimmer than `faint` |
-| `""` (empty) | none | no color escape emitted |
+| `black` `red` `green` `yellow` `blue` `magenta` `cyan` `white` | 8 标准 | 普通强度 |
+| `bold_black` `bold_red` … `bold_white` | 8 亮色 | 粗体 / 高亮 |
+| `faint` | 暗白 | 低对比 |
+| `dim` | 暗灰 | 比 `faint` 更暗 |
+| `""`（空） | 无 | 不发颜色转义 |
 
-Set `NO_COLOR=1` to override any theme and strip all colors.
+设 `NO_COLOR=1` 覆盖任何主题，关掉所有颜色。
 
-## Quick preview
+## 快速预览
 
-`minimax-statusline` reads JSON on stdin, so you can preview a theme
-without touching MiniMax:
+`minimax-statusline` 从 stdin 读 JSON，所以不动 CLI 也能预览主题：
 
 ```bash
 cat tests/fixtures/basic.json | STATUSLINE_THEME=vivid minimax-statusline
