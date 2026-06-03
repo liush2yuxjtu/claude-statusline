@@ -1,0 +1,13 @@
+{
+  "session_id": "fixture-opus",
+  "cwd": "/Users/example/opus-project",
+  "effort": { "level": "max" },
+  "model": { "id": "claude-opus-4-7", "display_name": "Claude Opus 4.7" },
+  "workspace": { "current_dir": "/Users/example/opus-project", "project_dir": "/Users/example/opus-project", "added_dirs": [] },
+  "context_window": {
+    "total_input_tokens": 195000,
+    "total_output_tokens": 0,
+    "context_window_size": 200000,
+    "remaining_percentage": 3
+  }
+}

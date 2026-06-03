@@ -53,25 +53,35 @@ C_DIM="${esc}[2m"
 C_FAINT="${esc}[2;37m"
 C_GRAY="${esc}[2;90m"
 
-# Color lookup table. Empty = no color.
-declare -A COLORS=(
-  [black]="${esc}[30m"      [red]="${esc}[31m"
-  [green]="${esc}[32m"      [yellow]="${esc}[33m"
-  [blue]="${esc}[34m"       [magenta]="${esc}[35m"
-  [cyan]="${esc}[36m"       [white]="${esc}[37m"
-  [bold_black]="${esc}[1;30m"  [bold_red]="${esc}[1;31m"
-  [bold_green]="${esc}[1;32m"  [bold_yellow]="${esc}[1;33m"
-  [bold_blue]="${esc}[1;34m"   [bold_magenta]="${esc}[1;35m"
-  [bold_cyan]="${esc}[1;36m"   [bold_white]="${esc}[1;37m"
-  [faint]="${esc}[2;37m"   [dim]="${esc}[2;90m"
-)
+# Bash 3.2 (macOS default) has no associative arrays, so we use a case
+# statement in `color()`. Empty / unknown names return C_RESET.
 color() {
   local name="${1:-}"
   if [ -z "$name" ] || [ "${NO_COLOR:-}" = "1" ]; then
     printf '%s' "$C_RESET"
     return
   fi
-  printf '%s' "${COLORS[$name]:-$C_RESET}"
+  case "$name" in
+    black)            printf '%s' "${esc}[30m" ;;
+    red)              printf '%s' "${esc}[31m" ;;
+    green)            printf '%s' "${esc}[32m" ;;
+    yellow)           printf '%s' "${esc}[33m" ;;
+    blue)             printf '%s' "${esc}[34m" ;;
+    magenta)          printf '%s' "${esc}[35m" ;;
+    cyan)             printf '%s' "${esc}[36m" ;;
+    white)            printf '%s' "${esc}[37m" ;;
+    bold_black)       printf '%s' "${esc}[1;30m" ;;
+    bold_red)         printf '%s' "${esc}[1;31m" ;;
+    bold_green)       printf '%s' "${esc}[1;32m" ;;
+    bold_yellow)      printf '%s' "${esc}[1;33m" ;;
+    bold_blue)        printf '%s' "${esc}[1;34m" ;;
+    bold_magenta)     printf '%s' "${esc}[1;35m" ;;
+    bold_cyan)        printf '%s' "${esc}[1;36m" ;;
+    bold_white)       printf '%s' "${esc}[1;37m" ;;
+    faint)            printf '%s' "${esc}[2;37m" ;;
+    dim)              printf '%s' "${esc}[2;90m" ;;
+    *)                printf '%s' "$C_RESET" ;;
+  esac
 }
 
 # ─── Config + theme discovery ───────────────────────────────────────────
@@ -109,23 +119,29 @@ script_dir() {
 }
 
 load_toml() {
-  # Reads a TOML file into KEY=VALUE shell vars and a `MODEL_TABLE` bash array.
-  # Uses a tiny embedded Python parser so we have no pip dependencies.
+  # Reads a TOML file and emits its JSON form on stdout. Uses stdlib tomllib
+  # (3.11+) if available, else falls back to the bundled tiny_toml.
+  # Must be called with the script's own lib dir on PYTHONPATH.
   local file="$1"
-  python3 - "$file" <<'PY' 2>/dev/null
+  [ -f "$file" ] || { printf '{}'; return; }
+  PYTHONPATH="$SCRIPT_DIR_LIB:${PYTHONPATH:-}" python3 - "$file" <<'PY' 2>/dev/null
 import json, sys
-sys.path.insert(0, "")
 try:
     import tomllib
 except ImportError:
-    import tiny_toml as tomllib
-d = tomllib.loads(open(sys.argv[1], "r", encoding="utf-8").read())
+    import tiny_toml as tomllib  # type: ignore
+try:
+    with open(sys.argv[1], "r", encoding="utf-8") as f:
+        d = tomllib.loads(f.read())
+except Exception:
+    d = {}
 print(json.dumps(d))
 PY
 }
 
 apply_config() {
-  local cfg_json="$1"
+  local cfg_json="${1:-}"
+  [ -z "$cfg_json" ] && { cfg_json="{}"; return 0; }
   # Parse with python, then expose as KEY=VALUE.
   eval "$(printf '%s' "$cfg_json" | python3 -c '
 import json, sys, shlex
@@ -177,7 +193,8 @@ print("CONFIG_MODEL_TABLE=(" + " ".join(shlex.quote(x) for x in mt) + ")")
 }
 
 apply_theme() {
-  local theme_json="$1"
+  local theme_json="${1:-}"
+  [ -z "$theme_json" ] && { theme_json="{}"; }
   # Populate a small set of THEME_* shell variables.
   eval "$(printf '%s' "$theme_json" | python3 -c '
 import json, sys
@@ -280,10 +297,12 @@ fi
 
 # ─── Load config + theme ───────────────────────────────────────────────
 SCRIPT_DIR_REAL="$(script_dir)"
+SCRIPT_DIR_LIB="$SCRIPT_DIR_REAL/lib"
 # Add the lib dir to PYTHONPATH for the parse/fetch helpers.
-export PYTHONPATH="$SCRIPT_DIR_REAL/lib:${PYTHONPATH:-}"
+export PYTHONPATH="$SCRIPT_DIR_LIB:${PYTHONPATH:-}"
 
 CFG_FILE=""
+cfg_json=""
 if CFG_FILE="$(config_path 2>/dev/null)"; then
   cfg_json="$(load_toml "$CFG_FILE")"
   apply_config "$cfg_json"

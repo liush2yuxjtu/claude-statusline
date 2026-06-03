@@ -7,7 +7,7 @@ Supports:
   - inline tables: key = { x = "y", z = 1 }
   - dotted keys in tables: a.b = "c"  -> {"a": {"b": "c"}}
   - comments starting with #
-  - """triple-quoted""" multi-line strings (basic)
+  - triple-quoted multi-line strings (basic)
   - underscore-separated numbers: 1_000_000
 
 This is NOT a full TOML 1.0 parser. It exists so the script has zero pip

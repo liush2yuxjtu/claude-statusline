@@ -1,0 +1,45 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: build + publish release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create source tarball
+        run: |
+          mkdir -p dist
+          tar --exclude='.git' --exclude='dist' --exclude='node_modules' \
+              --exclude='web/.next' --exclude='web/.vercel' \
+              --exclude='*.vsix' --exclude='web/node_modules' \
+              -czf "dist/claude-statusline-${{ github.ref_name }}.tar.gz" \
+              -C "$GITHUB_WORKSPACE/.." \
+              "$(basename "$GITHUB_WORKSPACE")"
+
+      - name: Compute SHA256
+        id: hash
+        run: |
+          echo "sha256=$(sha256sum dist/*.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: dist/*.tar.gz
+          body: |
+            See [CHANGELOG.md](https://github.com/liush2yuxjtu/claude-statusline/blob/main/CHANGELOG.md) for what's new.
+            SHA256: `${{ steps.hash.outputs.sha256 }}`

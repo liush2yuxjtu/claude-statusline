@@ -1,0 +1,37 @@
+{
+  "session_id": "fixture-1",
+  "transcript_path": "/tmp/transcript.jsonl",
+  "cwd": "/Users/example/projects/widget",
+  "effort": { "level": "high" },
+  "model": { "id": "MiniMax-M3", "display_name": "MiniMax-M3" },
+  "workspace": {
+    "current_dir": "/Users/example/projects/widget",
+    "project_dir": "/Users/example/projects/widget",
+    "added_dirs": []
+  },
+  "version": "2.1.160",
+  "output_style": { "name": "Proactive" },
+  "cost": {
+    "total_cost_usd": 0.144552,
+    "total_duration_ms": 14447,
+    "total_api_duration_ms": 6230,
+    "total_lines_added": 0,
+    "total_lines_removed": 0
+  },
+  "context_window": {
+    "total_input_tokens": 28673,
+    "total_output_tokens": 68,
+    "context_window_size": 1000000,
+    "current_usage": {
+      "input_tokens": 28559,
+      "output_tokens": 68,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 114
+    },
+    "used_percentage": 3,
+    "remaining_percentage": 97
+  },
+  "exceeds_200k_tokens": false,
+  "fast_mode": false,
+  "thinking": { "enabled": true }
+}

@@ -1,0 +1,15 @@
+{
+  "session_id": "fixture-empty",
+  "cwd": "/tmp",
+  "effort": { "level": "default" },
+  "model": { "id": "claude-3-5-sonnet", "display_name": "Claude 3.5 Sonnet" },
+  "workspace": { "current_dir": "/tmp", "project_dir": "/tmp", "added_dirs": [] },
+  "context_window": {
+    "total_input_tokens": 0,
+    "total_output_tokens": 0,
+    "context_window_size": 200000,
+    "current_usage": null,
+    "used_percentage": null,
+    "remaining_percentage": null
+  }
+}
