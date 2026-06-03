@@ -357,7 +357,8 @@ if [ "${1:-}" = "--self-test" ]; then
     printf 'fixture not found: %s\n' "$fixture" >&2
     exit 1
   fi
-  "$0" < "$fixture"
+  # Re-invoke with absolute path so subprocess finds lib/ etc.
+  bash "$SCRIPT_DIR_REAL/statusline.sh" < "$fixture"
   exit $?
 fi
 

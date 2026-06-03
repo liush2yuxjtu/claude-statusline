@@ -1,5 +1,7 @@
 # claude-statusline
 
+> 🌐 **Landing page**: <https://web-zeta-sage-59.vercel.app>
+
 A configurable, themeable, provider-pluggable statusline for the
 [Claude Code](https://docs.claude.com/en/docs/claude-code) TUI.
 
