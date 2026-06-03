@@ -1,0 +1,39 @@
+# minimal theme — for tmux/screen users and accessibility.
+# No colors, no emoji, ASCII only.
+
+dir_color    = ""
+branch_color = ""
+sep_color    = "faint"
+
+branch_glyph = "@"
+sep_glyph    = "|"
+
+bar_filled = "#"
+bar_empty  = "."
+icon_high  = "++"
+icon_mid   = "=="
+icon_low   = "--"
+
+[effort]
+default = "faint"
+low     = ""
+medium  = ""
+high    = ""
+max     = ""
+
+[bar]
+high = ""
+mid  = ""
+low  = ""
+
+[ctx]
+high = ""
+mid  = ""
+low  = ""
+
+[error]
+no_token = ""
+net      = "faint"
+auth     = "faint"
+http     = "faint"
+generic  = "faint"

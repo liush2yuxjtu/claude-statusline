@@ -1,0 +1,77 @@
+# claude-statusline configuration
+# Copy to ~/.config/statusline/config.toml (or set STATUSLINE_CONFIG to override)
+# All values shown are the defaults; omit a key to use the default.
+
+# ─── Provider (5h / plan-usage data) ─────────────────────────────────────
+[provider]
+# Which backend to query. Built-ins: "minimax" (default, original behavior),
+# "none" (skip the segment entirely), "custom" (define url + headers + jq map).
+name = "minimax"
+
+# Env-var name that holds the bearer token (read at call time, never written
+# to disk by the script).
+token_env = "ANTHROPIC_AUTH_TOKEN"
+
+# Seconds to cache the response. Default 60. Set 0 to disable caching.
+cache_ttl_seconds = 60
+
+# Network timeout for the provider call.
+timeout_seconds = 5
+
+# ─── Custom provider template (only used when name = "custom") ──────────
+# [provider.custom]
+# url = "https://example.com/v1/usage"
+# method = "GET"               # GET or POST
+# auth_header = "Authorization"  # set to "" to skip the auth header
+# auth_prefix = "Bearer "        # prepended to the token
+# extra_headers = { "X-Foo" = "bar" }
+# jq_path_percent = ".remaining_percent"     # path to a 0..100 number
+# jq_path_reset = ".reset_at"                # path to an ISO-8601 timestamp
+# jq_path_boost = ".boost_permille"          # optional, 0..1000
+
+# ─── Model context window table ──────────────────────────────────────────
+# Used when Claude Code's context_window.context_window_size is unreliable.
+# Substring match, case-insensitive. First match wins.
+[model.context]
+"MiniMax-M3"  = 1_000_000
+"opus-4"      = 200_000
+"sonnet-4"    = 200_000
+"haiku-4"     = 200_000
+# Add your own: "my-custom-model" = 500_000
+
+# ─── Layout ─────────────────────────────────────────────────────────────
+# Segments in the order you want them. Available: dir, branch, effort, ctx, five_hour.
+# Drop one to hide it. Reorder freely.
+layout = ["dir", "branch", "effort", "ctx", "five_hour"]
+
+# ─── Display ────────────────────────────────────────────────────────────
+[display]
+# Use the bundled default theme; or set to "minimal" / "vivid" / "solarized"
+# or a path to a custom .toml.
+theme = "default"
+
+# Show the 5h data as a battery bar (true) or just a number (false).
+five_hour_bar = true
+
+# Show tokens next to the ctx percent (e.g. "95% (950k)").
+ctx_show_tokens = true
+
+# Reuse the same theme/layout/theme if no config file is found (good for
+# one-off `curl | bash` installs).
+silent_no_config = false
+
+# ─── Thresholds for the bar / ctx colors ────────────────────────────────
+[thresholds]
+# Above `green_below` → green; `yellow_below` → yellow; else red.
+green_below  = 50   # >= green_below  → green
+yellow_below = 20   # >= yellow_below → yellow
+#                        < yellow_below → red
+
+# Bar: full when `r` is at or above `high_icon_pct`; nearly empty when below
+# `low_icon_pct`. The icon swaps accordingly.
+high_icon_pct = 90
+low_icon_pct  = 10
+
+# ─── Debug ──────────────────────────────────────────────────────────────
+# Set DEBUG_STATUSLINE=1 to log every stdin JSON to
+# ~/.cache/statusline/debug.log. Errors go to ~/.cache/statusline/error.log.

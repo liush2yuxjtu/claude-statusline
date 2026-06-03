@@ -1,0 +1,37 @@
+# build artifacts
+*.vsix
+*.tar.gz
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.tox/
+
+# Node / Next.js (landing page)
+node_modules/
+.next/
+out/
+dist/
+web/.next/
+web/out/
+web/.vercel/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# Runtime
+*.log
+.cache/
+statusline-debug.log

@@ -1,0 +1,39 @@
+# vivid theme — high contrast, accessibility-friendly.
+# Bright colors against a dark background.
+
+dir_color    = "bold_green"
+branch_color = "bold_yellow"
+sep_color    = "bold_white"
+
+branch_glyph = "★"
+sep_glyph    = "▌"
+
+bar_filled = "▓"
+bar_empty  = "░"
+icon_high  = "⚡"
+icon_mid   = "▮"
+icon_low   = "‼"
+
+[effort]
+default = "bold_white"
+low     = "bold_blue"
+medium  = "bold_cyan"
+high    = "bold_red"
+max     = "bold_red"
+
+[bar]
+high = "bold_green"
+mid  = "bold_yellow"
+low  = "bold_red"
+
+[ctx]
+high = "bold_green"
+mid  = "bold_yellow"
+low  = "bold_red"
+
+[error]
+no_token = ""
+net      = "bold_red"
+auth     = "bold_red"
+http     = "bold_yellow"
+generic  = "bold_red"
