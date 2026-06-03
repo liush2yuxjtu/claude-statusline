@@ -1,0 +1,68 @@
+{
+  "name": "claude-statusline",
+  "displayName": "Claude Statusline",
+  "description": "Mirror the claude-statusline TUI in the VS Code status bar. Configurable themes, provider-pluggable.",
+  "version": "0.1.0",
+  "publisher": "liush2yuxjtu",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "statusline",
+    "tui",
+    "minimax"
+  ],
+  "homepage": "https://github.com/liush2yuxjtu/claude-statusline",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liush2yuxjtu/claude-statusline.git"
+  },
+  "bugs": {
+    "url": "https://github.com/liush2yuxjtu/claude-statusline/issues"
+  },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "*"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "Claude Statusline",
+      "properties": {
+        "claudeStatusline.scriptPath": {
+          "type": "string",
+          "default": "${userHome}/.local/bin/claude-statusline",
+          "description": "Absolute path to the statusline.sh script. The extension execFile's it and renders the output."
+        },
+        "claudeStatusline.refreshIntervalMs": {
+          "type": "integer",
+          "default": 5000,
+          "minimum": 1000,
+          "description": "How often to refresh the status bar (ms)."
+        },
+        "claudeStatusline.showInStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the statusline in the VS Code status bar."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "publish-openvsx": "ovsx publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5"
+  }
+}
